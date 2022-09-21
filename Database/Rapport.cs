@@ -1,3 +1,8 @@
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace Database;
 abstract class Rapport
 {
     public abstract string Naam();

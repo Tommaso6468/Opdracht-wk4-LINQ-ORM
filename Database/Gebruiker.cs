@@ -1,7 +1,8 @@
+namespace Database;
 class Gebruiker
 {
     public int GebruikerId {get; set;}
-    public readonly string Email;
+    public string Email {get; set;}
     public Gebruiker(string email)
     {
         Email = email;

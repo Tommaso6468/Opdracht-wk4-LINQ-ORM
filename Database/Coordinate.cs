@@ -1,3 +1,4 @@
+namespace Database;
 class Coordinate
 {
     public int X {get; set;}
