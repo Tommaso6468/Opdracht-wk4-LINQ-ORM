@@ -5,10 +5,10 @@ class Gast : Gebruiker
     public DateTime GeboorteDatum {get; set;}
     public DateTime EersteBezoek {get; set;}
 
-    public ICollection<Reservering> Reserveringen {get; set;}
-    public Attractie FavorieteAttractie {get; set;}
-    public Gast? Begeleidt {get; set;}
-    public GastInfo GastInfo {get; set;}
+    public List<Reservering>? Reserveringen {get; set;}
+    public Attractie? Favoriet {get; set;}
+    public Gast? Begeleider {get; set;}
+    public GastInfo? GastInfo {get; set;}
 
     public Gast(string email) : base(email) {}
     

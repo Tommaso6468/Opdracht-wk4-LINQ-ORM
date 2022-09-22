@@ -3,8 +3,13 @@ namespace Database;
 class Attractie
 {
     // [Key]
-    public int AttractieId;
-    public string Naam;
+    public int AttractieId {get; set;}
+    public string Naam {get; set;}
+
+    public Attractie(string naam)
+    {
+        Naam = naam;
+    }
 
     public async Task<bool> OnderhoudBezig(DatabaseContext c)
     {
