@@ -7,11 +7,14 @@ class DatabaseContext : DbContext
     {
         builder.Entity<Gast>().ToTable("Gasten");
         builder.Entity<Medewerker>().ToTable("Medewerkers");
+        builder.Entity<Attractie>().HasKey(a => a.AttractieId);
+        builder.Entity<Gast>().HasOne(g => g.GastInfo).WithOne(g => g.gast).HasForeignKey<GastInfo>(g => g.GebruikerId);
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer(@"Server=PCT\SQLEXPRESS;Database=week4;Trusted_Connection=True;");
+        builder.UseSqlServer(@"Server=PCT\SQLEXPRESS;Database=a;Trusted_Connection=True;");
     }
 
     public DbSet<Gebruiker> Gebruikers {get; set;}

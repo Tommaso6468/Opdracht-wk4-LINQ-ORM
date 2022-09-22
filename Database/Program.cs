@@ -12,12 +12,7 @@ public class MainClass
         // Random random = new Random(1);
         // using (DatabaseContext c = new DatabaseContext())
         // {
-        //     c.Attracties.RemoveRange(c.Attracties);
-        //     c.Gebruikers.RemoveRange(c.Gebruikers);
-        //     c.Gasten.RemoveRange(c.Gasten);
-        //     c.Medewerkers.RemoveRange(c.Medewerkers);
-        //     c.Reserveringen.RemoveRange(c.Reserveringen);
-        //     c.Onderhoud.RemoveRange(c.Onderhoud);
+
 
         //     c.SaveChanges();
 
@@ -55,6 +50,13 @@ public class MainClass
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
 
+        db.Attracties.RemoveRange(db.Attracties);
+        db.Gebruikers.RemoveRange(db.Gebruikers);
+        db.Gasten.RemoveRange(db.Gasten);
+        db.Medewerkers.RemoveRange(db.Medewerkers);
+        db.Reserveringen.RemoveRange(db.Reserveringen);
+        db.Onderhoud.RemoveRange(db.Onderhoud);
+
 
         Random random = new Random(1);
         for (int i = 0; i < 40; i++)
@@ -68,5 +70,6 @@ public class MainClass
             db.Gasten.Add(nieuweGast);
         }
         db.SaveChanges();
+
     }
 }

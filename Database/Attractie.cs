@@ -1,6 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 namespace Database;
 class Attractie
 {
+    // [Key]
     public int AttractieId;
     public string Naam;
 

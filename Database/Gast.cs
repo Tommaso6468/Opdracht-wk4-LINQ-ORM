@@ -1,5 +1,3 @@
-using System;
-
 namespace Database;
 class Gast : Gebruiker
 {
@@ -10,6 +8,7 @@ class Gast : Gebruiker
     public ICollection<Reservering> Reserveringen {get; set;}
     public Attractie FavorieteAttractie {get; set;}
     public Gast? Begeleidt {get; set;}
+    public GastInfo GastInfo {get; set;}
 
     public Gast(string email) : base(email) {}
     
