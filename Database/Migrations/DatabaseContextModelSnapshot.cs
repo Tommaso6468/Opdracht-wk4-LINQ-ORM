@@ -3,7 +3,6 @@ using System;
 using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -16,26 +15,20 @@ namespace Database.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
 
             modelBuilder.Entity("Database.Attractie", b =>
                 {
                     b.Property<int>("AttractieId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttractieId"), 1L, 1);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("ReserveringId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("AttractieId");
 
@@ -48,15 +41,13 @@ namespace Database.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("GastId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LaatstBezochteUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -70,13 +61,11 @@ namespace Database.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -87,16 +76,14 @@ namespace Database.Migrations
                 {
                     b.Property<int>("OnderhoudId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OnderhoudId"), 1L, 1);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AttractieId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Probleem")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("OnderhoudId");
 
@@ -109,12 +96,10 @@ namespace Database.Migrations
                 {
                     b.Property<int>("ReserveringId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReserveringId"), 1L, 1);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("gastId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ReserveringId");
 
@@ -126,10 +111,10 @@ namespace Database.Migrations
             modelBuilder.Entity("MedewerkerOnderhoud", b =>
                 {
                     b.Property<int>("CoordineertId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("OnderhoudId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("CoordineertId", "OnderhoudId");
 
@@ -143,19 +128,19 @@ namespace Database.Migrations
                     b.HasBaseType("Database.Gebruiker");
 
                     b.Property<int?>("BegeleiderId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Credits")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("EersteBezoek")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("FavorietAttractieId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("GeboorteDatum")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.HasIndex("BegeleiderId");
 
@@ -189,13 +174,13 @@ namespace Database.Migrations
                     b.OwnsOne("Database.Coordinate", "Coordinaat", b1 =>
                         {
                             b1.Property<int>("GastInfoId")
-                                .HasColumnType("int");
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("X")
-                                .HasColumnType("int");
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Y")
-                                .HasColumnType("int");
+                                .HasColumnType("INTEGER");
 
                             b1.HasKey("GastInfoId");
 
@@ -222,13 +207,13 @@ namespace Database.Migrations
                     b.OwnsOne("Database.DateTimeBereik", "dateTimeBereik", b1 =>
                         {
                             b1.Property<int>("OnderhoudId")
-                                .HasColumnType("int");
+                                .HasColumnType("INTEGER");
 
                             b1.Property<DateTime>("Begin")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("TEXT");
 
                             b1.Property<DateTime?>("Eind")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("TEXT");
 
                             b1.HasKey("OnderhoudId");
 
@@ -253,13 +238,13 @@ namespace Database.Migrations
                     b.OwnsOne("Database.DateTimeBereik", "dateTimeBereik", b1 =>
                         {
                             b1.Property<int>("ReserveringId")
-                                .HasColumnType("int");
+                                .HasColumnType("INTEGER");
 
                             b1.Property<DateTime>("Begin")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("TEXT");
 
                             b1.Property<DateTime?>("Eind")
-                                .HasColumnType("datetime2");
+                                .HasColumnType("TEXT");
 
                             b1.HasKey("ReserveringId");
 
@@ -303,7 +288,7 @@ namespace Database.Migrations
                     b.HasOne("Database.Gebruiker", null)
                         .WithOne()
                         .HasForeignKey("Database.Gast", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Begeleider");
@@ -316,7 +301,7 @@ namespace Database.Migrations
                     b.HasOne("Database.Gebruiker", null)
                         .WithOne()
                         .HasForeignKey("Database.Medewerker", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

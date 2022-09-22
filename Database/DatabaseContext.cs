@@ -13,8 +13,8 @@ class DatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseSqlServer(@"Server=PCT\SQLEXPRESS;Database=a;Trusted_Connection=True;");
-        // builder.UseSqlite("Data Source=database.db");
+        // builder.UseSqlServer(@"Server=PCT\SQLEXPRESS;Database=a;Trusted_Connection=True;");
+        builder.UseSqlite("Data Source=database.db");
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

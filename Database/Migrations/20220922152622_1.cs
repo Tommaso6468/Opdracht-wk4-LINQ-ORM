@@ -13,9 +13,9 @@ namespace Database.Migrations
                 name: "Gebruikers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Email = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,7 +26,8 @@ namespace Database.Migrations
                 name: "Medewerkers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
                 },
                 constraints: table =>
                 {
@@ -35,17 +36,18 @@ namespace Database.Migrations
                         name: "FK_Medewerkers_Gebruikers_Id",
                         column: x => x.Id,
                         principalTable: "Gebruikers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Attracties",
                 columns: table => new
                 {
-                    AttractieId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naam = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReserveringId = table.Column<int>(type: "int", nullable: true)
+                    AttractieId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Naam = table.Column<string>(type: "TEXT", nullable: false),
+                    ReserveringId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,12 +58,13 @@ namespace Database.Migrations
                 name: "Gasten",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Credits = table.Column<int>(type: "int", nullable: false),
-                    GeboorteDatum = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EersteBezoek = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FavorietAttractieId = table.Column<int>(type: "int", nullable: true),
-                    BegeleiderId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Credits = table.Column<int>(type: "INTEGER", nullable: false),
+                    GeboorteDatum = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EersteBezoek = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    FavorietAttractieId = table.Column<int>(type: "INTEGER", nullable: true),
+                    BegeleiderId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,19 +83,20 @@ namespace Database.Migrations
                         name: "FK_Gasten_Gebruikers_Id",
                         column: x => x.Id,
                         principalTable: "Gebruikers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Onderhoud",
                 columns: table => new
                 {
-                    OnderhoudId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    dateTimeBereik_Begin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    dateTimeBereik_Eind = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Probleem = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AttractieId = table.Column<int>(type: "int", nullable: false)
+                    OnderhoudId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    dateTimeBereik_Begin = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    dateTimeBereik_Eind = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Probleem = table.Column<string>(type: "TEXT", nullable: false),
+                    AttractieId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,12 +113,11 @@ namespace Database.Migrations
                 name: "GastInfos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GastId = table.Column<int>(type: "int", nullable: false),
-                    LaatstBezochteUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Coordinaat_X = table.Column<int>(type: "int", nullable: false),
-                    Coordinaat_Y = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    GastId = table.Column<int>(type: "INTEGER", nullable: false),
+                    LaatstBezochteUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    Coordinaat_X = table.Column<int>(type: "INTEGER", nullable: false),
+                    Coordinaat_Y = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,11 +134,11 @@ namespace Database.Migrations
                 name: "Reserveringen",
                 columns: table => new
                 {
-                    ReserveringId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    gastId = table.Column<int>(type: "int", nullable: true),
-                    dateTimeBereik_Begin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    dateTimeBereik_Eind = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ReserveringId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    gastId = table.Column<int>(type: "INTEGER", nullable: true),
+                    dateTimeBereik_Begin = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    dateTimeBereik_Eind = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -151,8 +154,8 @@ namespace Database.Migrations
                 name: "MedewerkerOnderhoud",
                 columns: table => new
                 {
-                    CoordineertId = table.Column<int>(type: "int", nullable: false),
-                    OnderhoudId = table.Column<int>(type: "int", nullable: false)
+                    CoordineertId = table.Column<int>(type: "INTEGER", nullable: false),
+                    OnderhoudId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
