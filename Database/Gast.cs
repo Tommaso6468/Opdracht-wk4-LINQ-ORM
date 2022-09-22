@@ -8,6 +8,8 @@ class Gast : Gebruiker
     public DateTime EersteBezoek {get; set;}
 
     public ICollection<Reservering> Reserveringen {get; set;}
+    public Attractie FavorieteAttractie {get; set;}
+    public Gast? Begeleidt {get; set;}
 
     public Gast(string email) : base(email) {}
     

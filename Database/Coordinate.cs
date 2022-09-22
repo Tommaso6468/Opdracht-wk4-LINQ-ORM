@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Database;
+[Owned]
 class Coordinate
 {
     public int X {get; set;}

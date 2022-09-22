@@ -18,4 +18,7 @@ class DatabaseContext : DbContext
     public DbSet<Gast> Gasten {get; set;}
     public DbSet<Medewerker> Medewerkers {get; set;}
     public DbSet<Reservering> Reserveringen {get; set;}
+    public DbSet<Attractie> Attracties {get; set;}
+    public DbSet<Onderhoud> Onderhoud {get; set;}
+    public DbSet<GastInfo> GastInfo {get; set;}
 }
