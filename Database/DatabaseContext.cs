@@ -10,6 +10,7 @@ class DatabaseContext : DbContext
     public DbSet<Attractie> Attracties { get; set; }
     public DbSet<Onderhoud> Onderhoud { get; set; }
     public DbSet<GastInfo> GastInfos { get; set; }
+    // public DbSet<MedewerkerOnderhoud> MedewerkerOnderhoud { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
@@ -29,6 +30,16 @@ class DatabaseContext : DbContext
         // builder.Entity<Gebruiker>().ToTable("Gebruikers");
         builder.Entity<Gast>().ToTable("Gasten");
         builder.Entity<Medewerker>().ToTable("Medewerkers");
+
+        builder.Entity<Medewerker>()
+            .HasMany(m => m.Coordineert)
+            .WithMany(o => o.Coordineert)
+            .UsingEntity(j => j.ToTable("MedewerkerOnderhoudCoordineert"));
+
+        builder.Entity<Medewerker>()
+            .HasMany(m => m.Doet)
+            .WithMany(o => o.Doet)
+            .UsingEntity(j => j.ToTable("MedewerkerOnderhoudDoet"));    
     }
 
     public async Task<bool> Boek(Gast g, Attractie a, DateTimeBereik d)

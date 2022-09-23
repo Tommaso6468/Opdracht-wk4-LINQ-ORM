@@ -54,8 +54,8 @@ class Program
             c.Gasten.Add(testGast);
             c.SaveChanges();
             await c.Boek(testGast, testAttractie, testDate);
-            List<Reservering> res = c.Gasten.FirstOrDefault(item => item.Id == testGast.Id).Reserveringen.ToList();
-            Console.WriteLine(res[0].Attracties[0].Naam);
+            // List<Reservering> res = c.Gasten.FirstOrDefault(item => item.Id == testGast.Id).Reserveringen.ToList();
+            // Console.WriteLine(res[0].Attracties[0].Naam);
             Console.WriteLine("klaar");
 
             // Console.Write(await new DemografischRapport(c).Genereer());

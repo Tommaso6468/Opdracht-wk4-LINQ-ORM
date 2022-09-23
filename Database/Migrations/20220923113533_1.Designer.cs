@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220922152622_1")]
+    [Migration("20220923113533_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,7 +61,7 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Gebruiker", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GebruikerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -69,7 +69,7 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("GebruikerId");
 
                     b.ToTable("Gebruikers");
                 });
@@ -100,36 +100,51 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("gastId")
+                    b.Property<int?>("gastGebruikerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ReserveringId");
 
-                    b.HasIndex("gastId");
+                    b.HasIndex("gastGebruikerId");
 
                     b.ToTable("Reserveringen");
                 });
 
             modelBuilder.Entity("MedewerkerOnderhoud", b =>
                 {
-                    b.Property<int>("CoordineertId")
+                    b.Property<int>("CoordineertGebruikerId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("OnderhoudId")
+                    b.Property<int>("CoordineertOnderhoudId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("CoordineertId", "OnderhoudId");
+                    b.HasKey("CoordineertGebruikerId", "CoordineertOnderhoudId");
 
-                    b.HasIndex("OnderhoudId");
+                    b.HasIndex("CoordineertOnderhoudId");
 
-                    b.ToTable("MedewerkerOnderhoud");
+                    b.ToTable("MedewerkerOnderhoudCoordineert", (string)null);
+                });
+
+            modelBuilder.Entity("MedewerkerOnderhoud1", b =>
+                {
+                    b.Property<int>("DoetGebruikerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DoetOnderhoudId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DoetGebruikerId", "DoetOnderhoudId");
+
+                    b.HasIndex("DoetOnderhoudId");
+
+                    b.ToTable("MedewerkerOnderhoudDoet", (string)null);
                 });
 
             modelBuilder.Entity("Database.Gast", b =>
                 {
                     b.HasBaseType("Database.Gebruiker");
 
-                    b.Property<int?>("BegeleiderId")
+                    b.Property<int?>("BegeleiderGebruikerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Credits")
@@ -144,7 +159,7 @@ namespace Database.Migrations
                     b.Property<DateTime>("GeboorteDatum")
                         .HasColumnType("TEXT");
 
-                    b.HasIndex("BegeleiderId");
+                    b.HasIndex("BegeleiderGebruikerId");
 
                     b.HasIndex("FavorietAttractieId");
 
@@ -235,7 +250,7 @@ namespace Database.Migrations
                 {
                     b.HasOne("Database.Gast", "gast")
                         .WithMany("Reserveringen")
-                        .HasForeignKey("gastId");
+                        .HasForeignKey("gastGebruikerId");
 
                     b.OwnsOne("Database.DateTimeBereik", "dateTimeBereik", b1 =>
                         {
@@ -266,13 +281,28 @@ namespace Database.Migrations
                 {
                     b.HasOne("Database.Medewerker", null)
                         .WithMany()
-                        .HasForeignKey("CoordineertId")
+                        .HasForeignKey("CoordineertGebruikerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Database.Onderhoud", null)
                         .WithMany()
-                        .HasForeignKey("OnderhoudId")
+                        .HasForeignKey("CoordineertOnderhoudId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MedewerkerOnderhoud1", b =>
+                {
+                    b.HasOne("Database.Medewerker", null)
+                        .WithMany()
+                        .HasForeignKey("DoetGebruikerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Database.Onderhoud", null)
+                        .WithMany()
+                        .HasForeignKey("DoetOnderhoudId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -281,7 +311,7 @@ namespace Database.Migrations
                 {
                     b.HasOne("Database.Gast", "Begeleider")
                         .WithMany()
-                        .HasForeignKey("BegeleiderId");
+                        .HasForeignKey("BegeleiderGebruikerId");
 
                     b.HasOne("Database.Attractie", "Favoriet")
                         .WithMany()
@@ -289,7 +319,7 @@ namespace Database.Migrations
 
                     b.HasOne("Database.Gebruiker", null)
                         .WithOne()
-                        .HasForeignKey("Database.Gast", "Id")
+                        .HasForeignKey("Database.Gast", "GebruikerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -302,7 +332,7 @@ namespace Database.Migrations
                 {
                     b.HasOne("Database.Gebruiker", null)
                         .WithOne()
-                        .HasForeignKey("Database.Medewerker", "Id")
+                        .HasForeignKey("Database.Medewerker", "GebruikerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
