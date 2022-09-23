@@ -27,12 +27,7 @@ namespace Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ReserveringId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("AttractieId");
-
-                    b.HasIndex("ReserveringId");
 
                     b.ToTable("Attracties");
                 });
@@ -98,10 +93,15 @@ namespace Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AttractieId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("gastGebruikerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ReserveringId");
+
+                    b.HasIndex("AttractieId");
 
                     b.HasIndex("gastGebruikerId");
 
@@ -169,13 +169,6 @@ namespace Database.Migrations
                     b.HasBaseType("Database.Gebruiker");
 
                     b.ToTable("Medewerkers", (string)null);
-                });
-
-            modelBuilder.Entity("Database.Attractie", b =>
-                {
-                    b.HasOne("Database.Reservering", null)
-                        .WithMany("Attracties")
-                        .HasForeignKey("ReserveringId");
                 });
 
             modelBuilder.Entity("Database.GastInfo", b =>
@@ -246,6 +239,12 @@ namespace Database.Migrations
 
             modelBuilder.Entity("Database.Reservering", b =>
                 {
+                    b.HasOne("Database.Attractie", "Attractie")
+                        .WithMany("Reserveringen")
+                        .HasForeignKey("AttractieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Database.Gast", "gast")
                         .WithMany("Reserveringen")
                         .HasForeignKey("gastGebruikerId");
@@ -268,6 +267,8 @@ namespace Database.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ReserveringId");
                         });
+
+                    b.Navigation("Attractie");
 
                     b.Navigation("dateTimeBereik")
                         .IsRequired();
@@ -335,9 +336,9 @@ namespace Database.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Database.Reservering", b =>
+            modelBuilder.Entity("Database.Attractie", b =>
                 {
-                    b.Navigation("Attracties");
+                    b.Navigation("Reserveringen");
                 });
 
             modelBuilder.Entity("Database.Gast", b =>

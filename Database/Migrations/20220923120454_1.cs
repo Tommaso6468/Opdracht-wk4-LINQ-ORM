@@ -10,6 +10,19 @@ namespace Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Attracties",
+                columns: table => new
+                {
+                    AttractieId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Naam = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attracties", x => x.AttractieId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Gebruikers",
                 columns: table => new
                 {
@@ -23,35 +36,25 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medewerkers",
+                name: "Onderhoud",
                 columns: table => new
                 {
-                    GebruikerId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Medewerkers", x => x.GebruikerId);
-                    table.ForeignKey(
-                        name: "FK_Medewerkers_Gebruikers_GebruikerId",
-                        column: x => x.GebruikerId,
-                        principalTable: "Gebruikers",
-                        principalColumn: "GebruikerId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Attracties",
-                columns: table => new
-                {
-                    AttractieId = table.Column<int>(type: "INTEGER", nullable: false)
+                    OnderhoudId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Naam = table.Column<string>(type: "TEXT", nullable: false),
-                    ReserveringId = table.Column<int>(type: "INTEGER", nullable: true)
+                    dateTimeBereik_Begin = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    dateTimeBereik_Eind = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Probleem = table.Column<string>(type: "TEXT", nullable: false),
+                    AttractieId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Attracties", x => x.AttractieId);
+                    table.PrimaryKey("PK_Onderhoud", x => x.OnderhoudId);
+                    table.ForeignKey(
+                        name: "FK_Onderhoud_Attracties_AttractieId",
+                        column: x => x.AttractieId,
+                        principalTable: "Attracties",
+                        principalColumn: "AttractieId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,24 +91,20 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Onderhoud",
+                name: "Medewerkers",
                 columns: table => new
                 {
-                    OnderhoudId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    dateTimeBereik_Begin = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    dateTimeBereik_Eind = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Probleem = table.Column<string>(type: "TEXT", nullable: false),
-                    AttractieId = table.Column<int>(type: "INTEGER", nullable: false)
+                    GebruikerId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Onderhoud", x => x.OnderhoudId);
+                    table.PrimaryKey("PK_Medewerkers", x => x.GebruikerId);
                     table.ForeignKey(
-                        name: "FK_Onderhoud_Attracties_AttractieId",
-                        column: x => x.AttractieId,
-                        principalTable: "Attracties",
-                        principalColumn: "AttractieId",
+                        name: "FK_Medewerkers_Gebruikers_GebruikerId",
+                        column: x => x.GebruikerId,
+                        principalTable: "Gebruikers",
+                        principalColumn: "GebruikerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -138,11 +137,18 @@ namespace Database.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     gastGebruikerId = table.Column<int>(type: "INTEGER", nullable: true),
                     dateTimeBereik_Begin = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    dateTimeBereik_Eind = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    dateTimeBereik_Eind = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    AttractieId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reserveringen", x => x.ReserveringId);
+                    table.ForeignKey(
+                        name: "FK_Reserveringen_Attracties_AttractieId",
+                        column: x => x.AttractieId,
+                        principalTable: "Attracties",
+                        principalColumn: "AttractieId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reserveringen_Gasten_gastGebruikerId",
                         column: x => x.gastGebruikerId,
@@ -199,11 +205,6 @@ namespace Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attracties_ReserveringId",
-                table: "Attracties",
-                column: "ReserveringId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Gasten_BegeleiderGebruikerId",
                 table: "Gasten",
                 column: "BegeleiderGebruikerId");
@@ -235,24 +236,18 @@ namespace Database.Migrations
                 column: "AttractieId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reserveringen_AttractieId",
+                table: "Reserveringen",
+                column: "AttractieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reserveringen_gastGebruikerId",
                 table: "Reserveringen",
                 column: "gastGebruikerId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Attracties_Reserveringen_ReserveringId",
-                table: "Attracties",
-                column: "ReserveringId",
-                principalTable: "Reserveringen",
-                principalColumn: "ReserveringId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Attracties_Reserveringen_ReserveringId",
-                table: "Attracties");
-
             migrationBuilder.DropTable(
                 name: "GastInfos");
 
@@ -263,13 +258,13 @@ namespace Database.Migrations
                 name: "MedewerkerOnderhoudDoet");
 
             migrationBuilder.DropTable(
+                name: "Reserveringen");
+
+            migrationBuilder.DropTable(
                 name: "Medewerkers");
 
             migrationBuilder.DropTable(
                 name: "Onderhoud");
-
-            migrationBuilder.DropTable(
-                name: "Reserveringen");
 
             migrationBuilder.DropTable(
                 name: "Gasten");

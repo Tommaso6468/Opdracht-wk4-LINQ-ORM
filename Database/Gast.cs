@@ -12,7 +12,4 @@ class Gast : Gebruiker
 
     public Gast(string email) : base(email) {}
     
-    public void Boek(){
-
-    }
 }
