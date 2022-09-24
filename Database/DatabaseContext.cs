@@ -47,16 +47,18 @@ class DatabaseContext : DbContext
             return false;
         }
 
-        if (await a.Vrij(this, d))
+        if (!await a.Vrij(this, d))
         {
-            if (g.Reserveringen == null)
-            {
-                g.Reserveringen = new List<Reservering> { r };
-            }
-            else
-            {
-                g.Reserveringen.Add(r);
-            }
+            return false;
+        }
+
+        if (g.Reserveringen == null)
+        {
+            g.Reserveringen = new List<Reservering> { r };
+        }
+        else
+        {
+            g.Reserveringen.Add(r);
         }
 
         Gasten.First(g2 => g2.GebruikerId == g.GebruikerId).Credits -= 1;
